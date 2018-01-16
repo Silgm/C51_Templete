@@ -1,0 +1,135 @@
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE GPIO
+OBJECT MODULE PLACED IN .\Objects\gpio.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE gpio.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\gpio
+                    -.lst) OBJECT(.\Objects\gpio.obj)
+
+line level    source
+
+   1          #include "gpio.h"
+   2          
+   3          #define PORT0   0
+   4          #define PORT1   1
+   5          #define PORT2   2
+   6          
+   7          
+   8          #define digitalPinToPort(pin)           (pin/8)
+   9          #define digitalPinToBitMask(pin)        (0x01<<(pin%8))
+  10          
+  11          void digitalWrite(_Pin pin, uint8_t val)
+  12          {
+  13   1              uint8_t bitMask = digitalPinToBitMask(pin);
+  14   1              uint8_t port = digitalPinToPort(pin);
+  15   1              
+  16   1              switch(port)
+  17   1              {
+  18   2                      case PORT0:
+  19   2                              if (val)
+  20   2                              {
+  21   3                                      P0 |= bitMask;
+  22   3                              }
+  23   2                              else
+  24   2                              {
+  25   3                                      P0 &= ~bitMask;
+  26   3                              }                               
+  27   2                              break;
+  28   2                      case PORT1:
+  29   2                              if (val)
+  30   2                              {
+  31   3                                      P1 |= bitMask;
+  32   3                              }
+  33   2                              else
+  34   2                              {
+  35   3                                      P1 &= ~bitMask;
+  36   3                              }
+  37   2                              break;
+  38   2                      case PORT2:
+  39   2                              if (val)
+  40   2                              {
+  41   3                                      P2 |= bitMask;
+  42   3                              }
+  43   2                              else
+  44   2                              {
+  45   3                                      P2 &= ~bitMask;
+  46   3                              }
+  47   2                              break;
+  48   2                      default:
+  49   2                              break;
+  50   2              }
+  51   1      }
+  52          
+  53          
+  54          uint8_t digitalRead(_Pin pin)
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 2   
+
+  55          {
+  56   1              uint8_t bitMask = digitalPinToBitMask(pin);
+  57   1              uint8_t port = digitalPinToPort(pin);
+  58   1              
+  59   1              switch(port)
+  60   1              {
+  61   2                      case PORT0:
+  62   2                              return (P0 & bitMask);
+  63   2                              break;
+  64   2                      case PORT1:
+  65   2                              return (P1 & bitMask);
+  66   2                              break;
+  67   2                      case PORT2:
+  68   2                              return (P2 & bitMask);
+  69   2                              break;
+  70   2                      default:
+  71   2                              break;
+  72   2              }
+  73   1              return HIGH;
+  74   1      }
+  75          
+  76          uint8_t shiftIn(_Pin dataPin, _Pin clockPin, _Pin bitOrder) 
+  77          {
+  78   1              uint8_t value = 0;
+  79   1              uint8_t i;
+  80   1      
+  81   1              for (i = 0; i < 8; ++i) {
+  82   2                      digitalWrite(clockPin, HIGH);
+  83   2                      if (bitOrder)
+  84   2                              value |= digitalRead(dataPin) << i;
+  85   2                      else
+  86   2                              value |= digitalRead(dataPin) << (7 - i);
+  87   2                      digitalWrite(clockPin, LOW);
+  88   2              }
+  89   1              return value;
+  90   1      }
+  91          
+  92          
+  93          void shiftOut(_Pin dataPin, _Pin clockPin, _Pin bitOrder, uint8_t val)
+  94          {
+  95   1              uint8_t i;
+  96   1      
+  97   1              for (i = 0; i < 8; i++)  {
+  98   2                      if (bitOrder)
+  99   2                              digitalWrite(dataPin, !!(val & (1 << i)));
+ 100   2                      else    
+ 101   2                              digitalWrite(dataPin, !!(val & (1 << (7 - i))));
+ 102   2                              
+ 103   2                      digitalWrite(clockPin, HIGH);
+ 104   2                      digitalWrite(clockPin, LOW);            
+ 105   2              }
+ 106   1      }
+ 107          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    309    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
