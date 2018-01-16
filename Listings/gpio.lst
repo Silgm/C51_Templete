@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 1   
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 17:19:56 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE GPIO
@@ -62,7 +62,7 @@ line level    source
   52          
   53          
   54          uint8_t digitalRead(_Pin pin)
-C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 2   
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 17:19:56 PAGE 2   
 
   55          {
   56   1              uint8_t bitMask = digitalPinToBitMask(pin);
@@ -126,7 +126,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       5
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.54   GPIO                                                                  01/16/2018 16:23:17 PAGE 3   
+C51 COMPILER V9.54   GPIO                                                                  01/16/2018 17:19:56 PAGE 3   
 
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
