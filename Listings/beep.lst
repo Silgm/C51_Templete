@@ -1,0 +1,66 @@
+C51 COMPILER V9.54   BEEP                                                                  01/16/2018 16:35:19 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE BEEP
+OBJECT MODULE PLACED IN .\Objects\beep.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE beep.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\beep
+                    -.lst) OBJECT(.\Objects\beep.obj)
+
+line level    source
+
+   1          #include "beep.h"
+   2          
+   3          
+   4          #define FOSC 11960334L
+   5          
+   6          #define T1MS (65534)   //1ms timer calculation method in 12T mode
+   7          
+   8          uint8_t status = 0;
+   9          
+  10          void BeepInit()
+  11          {
+  12   1              
+  13   1              TMOD = 0x01;                    //set timer0 as mode1 (16-bit)
+  14   1          TL0 = T1MS;                     //initial timer0 low byte
+  15   1          TH0 = T1MS >> 8;                //initial timer0 high byte
+  16   1          TR0 = 1;                        //timer0 start running
+  17   1          ET0 = 1;                        //enable timer0 interrupt
+  18   1          EA = 1;                         //open global interrupt switch
+  19   1      }
+  20          
+  21          void BeepOn()
+  22          {
+  23   1              status = 1;
+  24   1      }
+  25          
+  26          
+  27          void BeepOff()
+  28          {
+  29   1              status = 0;
+  30   1      }
+  31          
+  32          void tm0_isr() interrupt 1 using 1
+  33          {
+  34   1          TL0 = T1MS;                     //reload timer0 low byte
+  35   1          TH0 = T1MS >> 8;                //reload timer0 high byte
+  36   1              if (status)
+  37   1              {
+  38   2                      beepPin = ! beepPin;      //work LED flash
+  39   2              }
+  40   1      }
+  41          
+  42          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     41    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

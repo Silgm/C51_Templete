@@ -1,6 +1,7 @@
 ".\Objects\STARTUP.obj",
 ".\Objects\main.obj",
 ".\Objects\gpio.obj",
-".\Objects\lcd12864.obj" 
+".\Objects\lcd12864.obj",
+".\Objects\beep.obj" 
 TO ".\Objects\KeilTemplete" 
 PRINT(".\Listings\KeilTemplete.m51") RAMSIZE(256) 
